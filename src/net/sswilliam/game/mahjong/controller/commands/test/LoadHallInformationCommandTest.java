@@ -3,10 +3,12 @@ package net.sswilliam.game.mahjong.controller.commands.test;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
+import java.util.logging.Handler;
 
 import net.sswilliam.game.mahjong.Protocal;
 import net.sswilliam.game.mahjong.ServerMain;
 import net.sswilliam.game.mahjong.client.MockClient;
+import net.sswilliam.game.mahjong.client.UnitTestBlockHandler;
 import net.sswilliam.java.utils.StringByteUtils;
 
 import org.junit.After;
@@ -41,11 +43,18 @@ public class LoadHallInformationCommandTest {
 
 	@Test
 	public void testGetHallInfo() throws Exception{
-		
+		UnitTestBlockHandler handler = new UnitTestBlockHandler();
+		handler.setFlag(Protocal.LOAD_HALL_INFORMATION);
 		MockClient client = new MockClient();
 		client.connect();
+		
+		client.addHandler(handler);
+		
 		client.login("sswilliam", "sswilliam");
-		byte[] bytes = client.loadHallInfo();
+		Thread.currentThread().sleep(100);
+		client.loadHallInfo();
+		Thread.currentThread().sleep(100);
+		byte[] bytes = handler.waitForResponse();
 		System.out.println("length"+bytes.length);
 		assertEquals(Protocal.LOAD_HALL_INFORMATION, bytes[0]);
 		assertEquals(Protocal.LOAD_HALL_INFORMATION_SUCCESS, bytes[1]);
@@ -60,8 +69,12 @@ public class LoadHallInformationCommandTest {
 	@Test
 	public void testGetHallInfoWithoutLogin() throws Exception{
 		MockClient client = new MockClient();
+		UnitTestBlockHandler handler = new UnitTestBlockHandler();
+		handler.setFlag(Protocal.LOAD_HALL_INFORMATION);
 		client.connect();
-		byte[] bytes = client.loadHallInfo();
+		client.addHandler(handler);
+		client.loadHallInfo();
+		byte[] bytes  = handler.waitForResponse();
 		System.out.println("length"+bytes.length);
 		assertEquals(Protocal.LOAD_HALL_INFORMATION, bytes[0]);
 		assertEquals(Protocal.COMMON_NOT_LOGIN, bytes[1]);

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import net.sswilliam.game.mahjong.Protocal;
 import net.sswilliam.game.mahjong.ServerMain;
 import net.sswilliam.game.mahjong.client.MockClient;
+import net.sswilliam.game.mahjong.client.UnitTestBlockHandler;
 import net.sswilliam.java.utils.StringByteUtils;
 
 import org.junit.After;
@@ -42,10 +43,15 @@ public class LoginCommandTest {
 
 	@Test
 	public void test() throws Exception{
-		
+		UnitTestBlockHandler handler = new UnitTestBlockHandler();
 		MockClient client = new MockClient();
 		client.connect();
-		byte[] data = client.login("sswilliam", "sswilliam");
+		client.addHandler(handler);
+		handler.setFlag(Protocal.LOGIN);
+		
+		client.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);;
+		byte[] data = handler.waitForResponse();
 		System.out.println("length "+data.length);
 		assertTrue(data.length >=2);
 		assertEquals(0, data[0]);
@@ -66,20 +72,18 @@ public class LoginCommandTest {
 	
 	@Test
 	public void testLoginWithSameConnectionMoreThanOnec() throws Exception{
-//		serverStarted = false;
-//		new Thread(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				ServerMain.getInstance().start();
-//			}
-//		},"Server Thread").start();
-//		Thread.currentThread().sleep(500);
+
+		UnitTestBlockHandler handler = new UnitTestBlockHandler();
 		MockClient client = new MockClient();
 		client.connect();
+		client.addHandler(handler);
 
-		byte[] data = client.login("sswilliam", "sswilliam");
+		handler.setFlag(Protocal.LOGIN);
+		
+		
+		client.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);;
+		byte[] data = handler.waitForResponse();
 		System.out.println("ddddd "+data.length);
 		int response = data[1];
 		byte[] leftData = Arrays.copyOfRange(data, 1, data.length);
@@ -87,15 +91,24 @@ public class LoginCommandTest {
 		System.out.println("dddd "+info);
 		assertEquals(Protocal.LOGIN_SUCCESS, response);
 
-		byte[] data2 = client.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);;
+		client.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);;
+		byte[] data2 = handler.waitForResponse();
 		int response2 = data2[1];
 		assertEquals(Protocal.LOGIN_CONNECTION_EXITING, response2);
 
-		byte[] data3 = client.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);;
+		client.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);;
+		byte[] data3 = handler.waitForResponse();
 		int response3 = data3[1];
 		assertEquals(Protocal.LOGIN_CONNECTION_EXITING, response3);
 
-		byte[] data4 = client.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);;
+		client.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);;
+		byte[] data4 =handler.waitForResponse();
 		int response4 = data4[1];
 		assertEquals(Protocal.LOGIN_CONNECTION_EXITING, response4);
 
@@ -105,19 +118,15 @@ public class LoginCommandTest {
 	
 	@Test
 	public void testLoginWithFalseUserNameAndPassowrd() throws Exception{
-//		serverStarted = false;
-//		new Thread(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				ServerMain.getInstance().start();
-//			}
-//		},"Server Thread").start();
-//		Thread.currentThread().sleep(500);
+		UnitTestBlockHandler handler = new UnitTestBlockHandler();
 		MockClient client = new MockClient();
 		client.connect();
-		byte[] data = client.login("sswilliam", "sswilliam2");
+		client.addHandler(handler);
+
+		handler.setFlag(Protocal.LOGIN);
+		client.login("sswilliam", "sswilliam2");
+		Thread.currentThread().sleep(10);
+		byte[] data = handler.waitForResponse();
 		int response = data[1];
 		assertEquals(Protocal.LOGIN_FAILED, response);
 
@@ -128,31 +137,40 @@ public class LoginCommandTest {
 	
 	@Test
 	public void testLoginWithMulitConnectionButSameUserName() throws Exception{
-//		serverStarted = false;
-//		new Thread(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				ServerMain.getInstance().start();
-//			}
-//		},"Server Thread").start();
-//		Thread.currentThread().sleep(500);
+		UnitTestBlockHandler handler = new UnitTestBlockHandler();
+		handler.setFlag(Protocal.LOGIN);
 		MockClient client = new MockClient();
 		client.connect();
-		byte[] data = client.login("sswilliam", "sswilliam");
+		client.addHandler(handler);
+		client.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);
+		byte[] data = handler.waitForResponse();
 		int response = data[1];
 		assertEquals(Protocal.LOGIN_SUCCESS, response);
-
+		
+		
+//
+		UnitTestBlockHandler handler2 = new UnitTestBlockHandler();
 		MockClient client2 = new MockClient();
 		client2.connect();
-		byte[] data2 = client2.login("sswilliam", "sswilliam");
+		client2.addHandler(handler2);
+		handler2.setFlag(Protocal.LOGIN);
+		client2.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);
+//		
+		byte[] data2 = handler2.waitForResponse();
 		int response2 = data2[1];
 		assertEquals(Protocal.LOGIN_USER_EXISTING, response2);
-		
+
+		UnitTestBlockHandler handler3 = new UnitTestBlockHandler();
 		MockClient client3 = new MockClient();
 		client3.connect();
-		byte[] data3 = client3.login("sswilliam", "sswilliam");
+		client3.addHandler(handler3);
+		handler3.setFlag(Protocal.LOGIN);
+		client3.login("sswilliam", "sswilliam");
+		Thread.currentThread().sleep(10);
+		
+		byte[] data3 = handler3.waitForResponse();
 		int response3 = data3[1];
 		assertEquals(Protocal.LOGIN_USER_EXISTING, response3);
 		
@@ -164,40 +182,53 @@ public class LoginCommandTest {
 	
 	@Test
 	public void testMaxLogin() throws Exception{
-//		serverStarted = false;
-//		new Thread(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				ServerMain.getInstance().start();
-//			}
-//		},"Server Thread").start();
 		ArrayList<MockClient> clintes = new ArrayList<MockClient>();
 		for(int i = 0;i<20;i++){
+			UnitTestBlockHandler handler = new UnitTestBlockHandler();
 			MockClient client = new MockClient();
 			client.connect();
+			client.addHandler(handler);
+			
 			clintes.add(client);
-			byte[] data = client.login("sswilliam"+i, "sswilliam"+i);
+			handler.setFlag(Protocal.LOGIN);
+			client.login("sswilliam"+i, "sswilliam"+i);
+			Thread.currentThread().sleep(10);
+			byte[] data = handler.waitForResponse(); 
 			int response = data[1];
 			assertEquals(Protocal.LOGIN_SUCCESS, response);
 		}
-		
+
+		UnitTestBlockHandler handler = new UnitTestBlockHandler();
 		MockClient tobeFailedClient = new MockClient();
 		tobeFailedClient.connect();
-		byte[] data = tobeFailedClient.login("sswlliam", "sswlliam");
+		tobeFailedClient.addHandler(handler);
+		handler.setFlag(Protocal.LOGIN);
+		tobeFailedClient.login("sswlliam", "sswlliam");
+		Thread.currentThread().sleep(10);
+		byte[] data =  handler.waitForResponse();
 		int response = data[1];
 		assertEquals(Protocal.LOGIN_MAX_USER_REACHED, response);
 		
 
+		UnitTestBlockHandler handler2 = new UnitTestBlockHandler();
 		MockClient tobeFailedClient2 = new MockClient();
 		tobeFailedClient2.connect();
-		byte[] data2 = tobeFailedClient2.login("sswlliam3", "sswlliam3");
+		tobeFailedClient2.addHandler(handler2);
+		handler2.setFlag(Protocal.LOGIN);
+		tobeFailedClient2.login("sswlliam3", "sswlliam3");
+		Thread.currentThread().sleep(10);
+		byte[] data2 = handler2.waitForResponse();
 		int response2 = data2[1];
 		assertEquals(Protocal.LOGIN_MAX_USER_REACHED, response2);
 
+		UnitTestBlockHandler handler3 = new UnitTestBlockHandler();
 		MockClient tobeFailedClient3 = new MockClient();
 		tobeFailedClient3.connect();
-		byte[] data3 = tobeFailedClient3.login("sswlliam3", "sswlliam");
+		tobeFailedClient3.addHandler(handler3);
+		handler3.setFlag(Protocal.LOGIN);
+		tobeFailedClient3.login("sswlliam3", "sswlliam");
+		Thread.currentThread().sleep(10);
+		byte[] data3 = handler3.waitForResponse();
 		int response3 = data3[1];
 		assertEquals(Protocal.LOGIN_MAX_USER_REACHED, response3);
 		

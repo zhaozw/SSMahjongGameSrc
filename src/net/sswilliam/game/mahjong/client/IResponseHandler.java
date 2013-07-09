@@ -1,4 +1,4 @@
-package net.sswilliam.game.mahjong.client.model;
+package net.sswilliam.game.mahjong.client;
 
 public interface IResponseHandler {
 
