@@ -17,7 +17,7 @@ public class HallFrame extends JFrame {
 	public JLabel status = new JLabel();
 	
 	private JScrollPane tablesScroll;
-	private JPanel tableContainer = new JPanel();
+	public JPanel tableContainer = new JPanel();
 	ArrayList<TableInHall> tables = new ArrayList<TableInHall>();
 	
 	public HallFrame(){

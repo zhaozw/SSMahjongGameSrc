@@ -232,9 +232,12 @@ public class Controller implements IDataHandler, IConnectHandler, IDisconnectHan
 	}
 	
 	public void broadCastToHall(byte[] bytes){
+		Log.Debug("Start broad case in hall to "+sessions.size()+" user", this);
 		for(int i = 0;i<sessions.size();i++){
 			UserSession session = sessions.get(i);
 			if(session != null && session.getConnection() != null && session.getState() == UserState.FREE){
+
+				Log.Debug("Start broad case in hall to "+session.getSessionID()+" user: "+session.getUser().loginname, this);
 				writeBytes(session.getConnection(), bytes);
 			}
 		}

@@ -1,16 +1,22 @@
 package net.sswilliam.game.mahjong.client.ui;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
+
 
 import net.sswilliam.game.mahjong.model.Table;
 
-public class TableInHall extends JPanel {
+public class TableInHall extends JPanel implements ActionListener{
+
+	
 
 	public JButton centerIndex = new JButton();
 	public JButton dongBtn = new JButton();
@@ -32,9 +38,13 @@ public class TableInHall extends JPanel {
 		centerIndex.setText(""+id);
 		centerIndex.setEnabled(false);
 		dongBtn.setText("东");
+		dongBtn.addActionListener(this);
 		nanbtn.setText("南");
+		nanbtn.addActionListener(this);
 		xiBtn.setText("西");
+		xiBtn.addActionListener(this);
 		beiBtn.setText("北");
+		beiBtn.addActionListener(this);
 		
 		dongLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nanLable.setHorizontalAlignment(SwingConstants.CENTER);
@@ -52,6 +62,68 @@ public class TableInHall extends JPanel {
 		UIManager.add(this, beiLabel, 5, 155, 80, 20);
 		
 		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == dongBtn){
+			SwingUtilities.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					UIManager.hallFrame.tableContainer.setEnabled(false);
+					UIManager.hallFrame.status.setText("start to enter the room");
+				}
+			});
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					
+				}
+			}).start();
+			return;
+		}
+		if(e.getSource() == nanbtn){
+
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					
+				}
+			}).start();
+			return;
+		}
+		if(e.getSource() == xiBtn){
+
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					
+				}
+			}).start();
+			return;
+		}
+		if(e.getSource() == beiBtn){
+
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					
+				}
+			}).start();
+			return;
+		}
+		return;
 	}
 	
 	public void refreshData(String source){

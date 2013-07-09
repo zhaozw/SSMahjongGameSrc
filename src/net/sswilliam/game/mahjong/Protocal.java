@@ -21,13 +21,13 @@ public class Protocal {
 	public static final byte SIT_TABLE = 2;
 	public static final byte SIT_TABLE_SIT_ALREADY_TAKEN= 0;
 	public static final byte SIT_TABLE_TABLE_NOT_EXIST = 1;
-	public static final byte SIT_TABLE_SIT_NOT_EXIST = 2;
+	public static final byte SIT_TABLE_SEAT_NOT_EXIST = 2;
 	public static final byte SIT_TABLE_EXCEPTION_FAILED = 3;
 	public static final byte SIT_TABLE_SUCCESS = 4;
 	public static final byte SIT_TABLE_NOT_RIGHT_USER_STATE = 5;
 	
 	
-	public static final byte NOTIFY_SIT_TALBE = 3;
+	public static final byte NOTIFY_SIT_TABLE = 3;
 	
 	
 	
