@@ -1,14 +1,15 @@
 package net.sswilliam.game.mahjong.client.model;
 
+import net.sswilliam.game.mahjong.client.ClientContext;
 import net.sswilliam.game.platform.user.User;
 
 public class LocalModel {
 
-	public static final LocalModel instance = new LocalModel();
 	private User user = new User();
 	private String sesionid;
-	private LocalModel(){
-		
+	private ClientContext context;
+	public LocalModel(ClientContext context){
+		this.context = context;
 	}
 	
 	public User getUser(){

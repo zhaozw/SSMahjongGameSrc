@@ -79,4 +79,54 @@ public class LoadHallInformationCommandTest {
 		assertEquals(Protocal.LOAD_HALL_INFORMATION, bytes[0]);
 		assertEquals(Protocal.COMMON_NOT_LOGIN, bytes[1]);
 	}
+	
+	@Test
+	public void testGetHallInforForSeveralSitting() throws Exception{
+		UnitTestBlockHandler handler = new UnitTestBlockHandler();
+		MockClient client = new MockClient();
+		handler.setFlag(Protocal.LOGIN);
+		client.connect();
+		client.addHandler(handler);
+		client.login("sswilliam", "sswilliam");
+		Thread.sleep(100);
+		handler.waitForResponse();
+		Thread.sleep(100);
+		handler.setFlag(Protocal.LOAD_HALL_INFORMATION);
+		client.loadHallInfo();
+		Thread.sleep(100);
+		byte[] hallData = handler.waitForResponse();
+		assertEquals(Protocal.LOAD_HALL_INFORMATION, hallData[0]);
+		assertEquals(Protocal.LOAD_HALL_INFORMATION_SUCCESS, hallData[1]);
+		byte[] hallInfo = Arrays.copyOfRange(hallData, 2, hallData.length);
+		String retStr  = StringByteUtils.byte2str(hallInfo);
+		System.out.println(retStr);
+		
+		for(int i = 1;i<19;i++){
+			UnitTestBlockHandler thandler = new UnitTestBlockHandler();
+			MockClient tclient = new MockClient();
+			thandler.setFlag(Protocal.LOGIN);
+			tclient.connect();
+			tclient.addHandler(thandler);
+			tclient.login("sswilliam"+i, "sswilliam"+i);
+			Thread.sleep(100);
+			thandler.waitForResponse();
+			thandler.setFlag(Protocal.SIT_TABLE);
+			tclient.sit((byte)i, (byte)(i%4));
+			Thread.sleep(100);
+			byte[] sitData = thandler.waitForResponse();
+			assertEquals(Protocal.SIT_TABLE, sitData[0]);
+			assertEquals(Protocal.SIT_TABLE_SUCCESS, sitData[1]);
+			
+			handler.setFlag(Protocal.LOAD_HALL_INFORMATION);
+			client.loadHallInfo();
+			Thread.sleep(100);
+			hallData = handler.waitForResponse();
+			assertEquals(Protocal.LOAD_HALL_INFORMATION, hallData[0]);
+			assertEquals(Protocal.LOAD_HALL_INFORMATION_SUCCESS, hallData[1]);
+
+			hallInfo = Arrays.copyOfRange(hallData, 2, hallData.length);
+			retStr  = StringByteUtils.byte2str(hallInfo);
+			System.out.println(retStr);
+		}
+	}
 }

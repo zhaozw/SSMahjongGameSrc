@@ -1,7 +1,6 @@
 package net.sswilliam.game.mahjong.client;
 
 import net.sswilliam.game.mahjong.ServerMain;
-import net.sswilliam.game.mahjong.client.ui.UIManager;
 
 public class MockGameClient {
 
@@ -16,6 +15,24 @@ public class MockGameClient {
 		}, "Server").start();
 		
 		try {javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");}catch (Exception e) {}
-		UIManager.showLoginFrame();
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+
+				new ClientContext("[A]",-500, 0,"sswilliam","sswilliam").start();
+			}
+		}).start();
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+
+				new ClientContext("[B]",500, 0, "sswilliam1", "sswilliam1").start();
+			}
+		}).start();
 	}
 }

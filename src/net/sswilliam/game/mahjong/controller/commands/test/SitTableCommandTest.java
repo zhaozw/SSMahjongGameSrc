@@ -554,34 +554,6 @@ public class SitTableCommandTest {
 		Thread.currentThread().sleep(10);
 		handler3.waitForResponse();
 		
-//		handler.setFlag(Protocal.SIT_TABLE);
-		
-//		
-//		client.sit((byte)1, (byte)1);
-//		Thread.currentThread().sleep(10);
-//		byte[] bytes = handler.waitForResponse();
-//		assertEquals( Protocal.SIT_TABLE_SUCCESS,bytes[1]);
-//		
-//
-//		Thread.sleep(100);
-//		handler.setFlag(Protocal.NOTIFY_SIT_TABLE);
-
-	
-//		handler2.setFlag(Protocal.SIT_TABLE);
-//		client2.sit((byte)1, (byte)2);
-//		Thread.currentThread().sleep(10);
-//		byte[] bytes2 = handler2.waitForResponse();
-//		assertEquals( Protocal.SIT_TABLE_SUCCESS,bytes2[1]);
-//		Thread.sleep(100);
-//		
-//		bytes = handler.waitForResponse();
-//		assertEquals(Protocal.NOTIFY_SIT_TABLE, bytes[0]);
-//		assertEquals(1, bytes[1]);
-//		assertEquals(2, bytes[2]);
-//		byte[] nameBytes = Arrays.copyOfRange(bytes, 3, bytes.length);
-//		System.out.println(StringByteUtils.byte2str(nameBytes));
-//		assertEquals("Usswilliam1", StringByteUtils.byte2str(nameBytes));
-		
 		Thread.currentThread().sleep(100);
 		
 		handler.setFlag(Protocal.NOTIFY_SIT_TABLE);
