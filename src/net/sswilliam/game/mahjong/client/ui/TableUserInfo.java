@@ -30,14 +30,14 @@ public class TableUserInfo extends JPanel {
 		context.add(this, userHeader, 15, 5, 50, 50);
 		
 		username = new JLabel();
-		context.add(this, username, 5, 60, 70, 20);
+		context.add(this, username, 5, 55, 70, 20);
 		userHeader.setAlignmentX(SwingConstants.CENTER);
 		
 		userState = new JLabel();
-		context.add(this, userState, 5, 85, 70, 20);
+		context.add(this, userState, 5, 75, 70, 20);
 		userState.setAlignmentX(SwingConstants.CENTER);
 		
-		this.setSize(80,110);
+		this.setSize(80,95);
 		this.setBorder(new LineBorder(Color.DARK_GRAY));
 		
 		// TODO Auto-generated constructor stub

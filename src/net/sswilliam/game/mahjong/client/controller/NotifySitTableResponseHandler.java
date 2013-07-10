@@ -45,6 +45,7 @@ public class NotifySitTableResponseHandler extends ClientResponseHandlerBase {
 				// TODO Auto-generated method stub
 				if(context.tableFrame.isVisible()){
 					context.tableFrame.status.setText("update status of the table information successfully");
+					context.tableFrame.sit(seat,content);
 					return;
 				}
 				if(context.hallFrame.isVisible()){

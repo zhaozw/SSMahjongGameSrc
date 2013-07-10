@@ -78,24 +78,32 @@ public class TableInHall extends JPanel implements ActionListener{
 			if(e.getSource() == dongBtn){
 				
 
+				context.tableFrame.selfSeat = (byte)0;
+				context.tableFrame.tableid = (byte)id;
 				context.controller.sit((byte)id, (byte)0);
 				return;
 			}
 			if(e.getSource() == nanBtn){
 
 
+				context.tableFrame.selfSeat = (byte)1;
+				context.tableFrame.tableid = (byte)id;
 				context.controller.sit((byte)id, (byte)1);
 				return;
 			}
 			if(e.getSource() == xiBtn){
 
 
+				context.tableFrame.selfSeat = (byte)2;
+				context.tableFrame.tableid = (byte)id;
 				context.controller.sit((byte)id, (byte)2);
 				return;
 			}
 			if(e.getSource() == beiBtn){
 
 
+				context.tableFrame.selfSeat = (byte)3;
+				context.tableFrame.tableid = (byte)id;
 				context.controller.sit((byte)id, (byte)3);
 				return;
 			}
@@ -121,23 +129,31 @@ public class TableInHall extends JPanel implements ActionListener{
 			}
 			if(datas[1].equals("#")){
 				dongLabel.setText("空");
+				dongBtn.setEnabled(true);
 			}else{
 				dongLabel.setText(datas[1]);
+				dongBtn.setEnabled(false);
 			}
 			if(datas[2].equals("#")){
 				nanLable.setText("空");
+				nanBtn.setEnabled(true);
 			}else{
 				nanLable.setText(datas[2]);
+				nanBtn.setEnabled(false);
 			}
 			if(datas[3].equals("#")){
 				xiLabel.setText("空");
+				xiBtn.setEnabled(true);
 			}else{
 				xiLabel.setText(datas[3]);
+				nanBtn.setEnabled(false);
 			}
 			if(datas[4].equals("#")){
 				beiLabel.setText("空");
+				dongBtn.setEnabled(true);
 			}else{
-				beiLabel.setText(datas[4]);
+				beiBtn.setText(datas[4]);
+				nanBtn.setEnabled(false);
 			}
 		}
 	}

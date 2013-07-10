@@ -45,6 +45,8 @@ public class SitTableResponseHandler extends ClientResponseHandlerBase {
 						context.hallFrame.status.setText("[SIT TABLE] sit success");
 						context.hallFrame.setVisible(false);
 						context.tableFrame.setVisible(true);
+						context.tableFrame.init();
+						context.tableFrame.selfInfo.username.setText(context.model.getUser().username);
 					}
 				});
 				break;

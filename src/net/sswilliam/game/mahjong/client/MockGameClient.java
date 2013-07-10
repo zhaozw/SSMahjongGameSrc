@@ -21,7 +21,7 @@ public class MockGameClient {
 			public void run() {
 				// TODO Auto-generated method stub
 
-				new ClientContext("[A]",-500, 0,"sswilliam","sswilliam").start();
+				new ClientContext("[A]",-300, 0,"sswilliam","sswilliam").start();
 			}
 		}).start();
 		
@@ -31,7 +31,7 @@ public class MockGameClient {
 			public void run() {
 				// TODO Auto-generated method stub
 
-				new ClientContext("[B]",500, 0, "sswilliam1", "sswilliam1").start();
+				new ClientContext("[B]",300, 0, "sswilliam1", "sswilliam1").start();
 			}
 		}).start();
 	}

@@ -55,7 +55,7 @@ public class ClientContext {
 			int w, int h) {
 		comp.setBounds(x, y, w, h);
 
-//		 comp.setBorder(new LineBorder(Color.RED));
+		 comp.setBorder(new LineBorder(Color.RED));
 
 		parent.add(comp);
 	}
@@ -78,7 +78,7 @@ public class ClientContext {
 		if(screenW == 1200 && screenH == 1600){
 			frame.setLocation(1200 + (2560 - frame.getWidth())/2+offsetx, (1440 - frame.getHeight())/2+offsety);
 		}else{
-			frame.setLocation((2560 - frame.getWidth())/2+offsetx, (1440 - frame.getHeight())/2+offsety);
+			frame.setLocation((screenW - frame.getWidth())/2+offsetx, (screenH - frame.getHeight())/2+offsety);
 		}
 			
 	}

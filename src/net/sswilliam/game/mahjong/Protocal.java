@@ -29,6 +29,8 @@ public class Protocal {
 	
 	public static final byte NOTIFY_SIT_TABLE = 3;
 	
+	public static final byte LOAD_TABLE_INFORMATION = 4;
+	
 	
 	
 }
